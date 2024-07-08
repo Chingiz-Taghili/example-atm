@@ -5,14 +5,14 @@ public abstract class Client {
     private String name;
     private String surname;
     private String cardNumber;
-    private int cardPassword;
+    private String cardPinCode;
     private int cardBalance;
 
-    public Client(String name, String surname, String cardNumber, int cardPassword) {
+    public Client(String name, String surname, String cardNumber, String cardPinCode) {
         this.name = name;
         this.surname = surname;
         this.cardNumber = cardNumber;
-        this.cardPassword = cardPassword;
+        this.cardPinCode = cardPinCode;
     }
 
     public String getName() {
@@ -24,11 +24,11 @@ public abstract class Client {
     }
 
     public String getCardNumber() {
-        return cardNumber;
+        return "********" + cardNumber;
     }
 
-    public int getCardPassword() {
-        return cardPassword;
+    public String getCardPinCode() {
+        return cardPinCode;
     }
 
     public int getCardBalance() {
@@ -41,5 +41,10 @@ public abstract class Client {
 
     public void minusCardBalance(int amount) {
         this.cardBalance -= amount;
+    }
+
+    public String toString(){
+
+        return name + " " + surname + " (" + getCardNumber() + ")";
     }
 }

@@ -2,35 +2,75 @@ package menu.mainmenu;
 
 import bean.OrdinaryClient;
 import data.Data;
+import menu.mainmenu.inter.MoneyTransferInter;
+import util.Check;
 import util.Input;
 
-public class MoneyTransfer {
+public class MoneyTransfer implements MoneyTransferInter {
 
-    public static void process(OrdinaryClient orClnt) {
-
-        int select = Input.inputNumber("1. Bank daxili hesaba köçür" +
-                "\n2. Başqa bankın hesabına köçür");
+    public void process(OrdinaryClient orClnt) {
+        int select = 0;
+        if (orClnt.getCardBalance() > 0) {
+            select = Input.number("1. Bank daxili hesaba köçür" +
+                    "\n2. Başqa bankın hesabına köçür");
+        } else {
+            System.out.println("Balansınızda köçürmə edilə biləcək vəsait yoxdur!" +
+                    " Balansınızı artırın və yenidən cəhd edin!\n");
+            return;
+        }
 
         if (select == 1) {
-            OrdinaryClient oc;
-            for (int i = 0; i < Data.instance().getOrClnts().size(); i++) {
-                oc = Data.instance().getOrClnts().get(i);
-                if (oc == orClnt) {
-                    continue;
-                }
-                System.out.println((i+1) + ". " + oc.getName() + " " + oc.getSurname());
-            }
-            int selectedAccount = Input.inputNumber("Köçürmək istədiyiniz hesabı seçin");
-            oc = Data.instance().getOrClnts().get(selectedAccount-1);
-            int amount = Input.inputNumber("Köçürüləcək məbləği daxil edin");
-            orClnt.minusCardBalance(amount);
-            oc.plusCardBalance(amount);
-            System.out.println(amount + " AZN " + oc.getName() + " " + oc.getSurname() + " adlı hesaba köçürüldü!\n");
+            internalTransfer(orClnt);
         } else if (select == 2) {
-            Input.inputText("Köçürüləcək kartın 16 rəqəmli nömrəsini daxil edin");
-            int amount = Input.inputNumber("Köçürüləcək məbləği daxil edin");
-            orClnt.minusCardBalance(amount);
-            System.out.println(amount + " AZN daxil etdiyiniz karta köçürüldü!\n");
+            externalTransfer(orClnt);
+        } else {
+            System.out.println("Menyunu düzgün daxil edin!\n");
         }
     }
+
+    private void internalTransfer(OrdinaryClient orClnt) {
+        if (Data.instance().getOrClnts().size() > 1) {
+            for (OrdinaryClient oCl : Data.instance().getOrClnts()) {
+                if (oCl == orClnt) {
+                    continue;
+                }
+                System.out.println(oCl);
+            }
+
+            String cardNumber = Check.cardNumber(Input.text(
+                    "Köçürmək istədiyiniz hesabın son 8 rəqəmini daxil edin"));
+
+            for (OrdinaryClient oCl : Data.instance().getOrClnts()) {
+                if (oCl.getCardNumber().endsWith(cardNumber)) {
+                    int amount = Input.number("Köçürüləcək məbləği daxil edin (Balansınız: "
+                            + orClnt.getCardBalance() + " AZN)");
+
+                    while (amount > orClnt.getCardBalance()) {
+                        amount = Input.number("Maksimum köçürə biləcəyiniz məbləğ: " + orClnt.getCardBalance() + " AZN");
+                    }
+                    orClnt.minusCardBalance(amount);
+                    oCl.plusCardBalance(amount);
+                    System.out.println(amount + " AZN " + oCl.getName() + " " + oCl.getSurname() + " adlı hesaba köçürüldü!\n");
+                    return;
+                } else {
+                    System.out.println("Daxil etdiyiniz hesab tapılmadı!\n");
+                }
+            }
+        } else {
+            System.out.println("Pul köçürə biləcəyiniz bank daxili hesab yoxdur!\n");
+        }
+    }
+
+    private void externalTransfer(OrdinaryClient orClnt) {
+        Input.text("Köçürüləcək kartın 16 rəqəmli nömrəsini daxil edin");
+        int amount = Input.number("Köçürüləcək məbləği daxil edin (Balansınız: "
+                + orClnt.getCardBalance() + " AZN)");
+        while (amount > orClnt.getCardBalance()) {
+            amount = Input.number("Maksimum köçürə biləcəyiniz məbləğ: " + orClnt.getCardBalance() + " AZN");
+        }
+
+        orClnt.minusCardBalance(amount);
+        System.out.println(amount + " AZN məbləğ daxil etdiyiniz karta köçürüldü!\n");
+    }
 }
+

@@ -2,32 +2,31 @@ package menu.loginmenu;
 
 import bean.OrdinaryClient;
 import data.Data;
+import menu.loginmenu.inter.RegisterAccountInter;
+import util.Check;
 import util.Input;
-import util.Menu;
+import util.Show;
 
-public class RegisterAccount {
+public class RegisterAccount implements RegisterAccountInter {
 
-    public static void process() {
-        String name = Input.inputText("Adınız");
-        String surname = Input.inputText("Soyadınız");
-        String cardNumber = Input.inputText("Kartınızın 16 rəqəmli nömrəsi");
-//        while (cardNumber.length() != 16) {
-//            cardNumber = Input.inputText("Nömrəni düzgün daxil edin!");
-//        }
-        int cardPassword = Input.inputNumber("Kartınızın 4 rəqəmli pin kodu");
-//        while (Integer.toString(cardPassword).length() != 4) {
-//            cardPassword = Input.inputNumber("Pin kodu düzgün daxil edin!");
-//        }
+    public void process() {
 
-        for (OrdinaryClient oc : Data.instance().getOrClnts()) {
-            if (oc.getName().equalsIgnoreCase(name) && oc.getCardPassword() == cardPassword) {
-                System.out.println("Bu adda hesab artıq mövcuddur\n");
-                return;
-            }
+        String[] nameAndSurnameArr = Check.nameAndSurname(
+                Input.text("Adınız və soyadınız"));
+
+        if (Check.accountExistence(nameAndSurnameArr)) {
+            return;
         }
-        OrdinaryClient oc = new OrdinaryClient(name, surname, cardNumber, cardPassword);
+
+        String cardNumber = Check.cardNumber(
+                Input.text("Kart nömrəsinin son 8 rəqəmi"));
+
+        String cardPinCode = Check.cardPinCode(
+                Input.text("Kartınızın 4 rəqəmli pin kodu"));
+
+        OrdinaryClient oc = new OrdinaryClient(nameAndSurnameArr[0], nameAndSurnameArr[1], cardNumber, cardPinCode);
         Data.instance().getOrClnts().add(oc);
-        System.out.println("Qeydiyyatınız uğurla tamamlandı!\n");
-        Menu.mainMenuProcess(oc);
+        System.out.println("Təbriklər " + oc.getName() + " " + oc.getSurname() + ". Qeydiyyatınız uğurla tamamlandı!\n");
+        Show.mainMenu(oc);
     }
 }

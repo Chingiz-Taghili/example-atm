@@ -1,8 +1,10 @@
 package menu.loginmenu;
 
-public class ExitProgram {
+import menu.loginmenu.inter.ExitProgramInter;
 
-    public static void process() {
+public class ExitProgram implements ExitProgramInter {
+
+    public void process() {
         System.exit(0);
     }
 }

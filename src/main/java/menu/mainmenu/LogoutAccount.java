@@ -1,12 +1,13 @@
 package menu.mainmenu;
 
 import bean.OrdinaryClient;
-import util.Menu;
+import menu.mainmenu.inter.LogoutAccountInter;
+import util.Show;
 
-public class LogoutAccount {
+public class LogoutAccount implements LogoutAccountInter {
 
-    public static void process(OrdinaryClient orClnt) {
+    public void process(OrdinaryClient orClnt) {
         System.out.println("Hesabdan çıxıldı!\n");
-        Menu.loginMenuProcess();
+        Show.loginMenu();
     }
 }

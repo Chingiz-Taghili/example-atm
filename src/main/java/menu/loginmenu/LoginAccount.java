@@ -2,32 +2,25 @@ package menu.loginmenu;
 
 import bean.OrdinaryClient;
 import data.Data;
+import menu.loginmenu.inter.LoginAccountInter;
+import util.Check;
 import util.Input;
-import util.Menu;
+import util.Show;
 
-public class LoginAccount {
+public class LoginAccount implements LoginAccountInter {
 
-    public static void process() {
-        String name = Input.inputText("Adınız");
-        int password = Input.inputNumber("Pin kodunuz");
-        OrdinaryClient orClnt = null;
+    public void process() {
+        String[] nameAndSurnameArr = Check.nameAndSurname(Input.text("Adınız və soyadınız"));
 
-        if (!Data.instance().getOrClnts().isEmpty()) {
+        String cardPinCode = Check.cardPinCode(Input.text("Kartınızın pin kodu"));
 
-            for (int i = 0; i < Data.instance().getOrClnts().size(); i++) {
-                if (name.equalsIgnoreCase(Data.instance().getOrClnts().get(i).getName()) && password == Data.instance().getOrClnts().get(i).getCardPassword()) {
-                    orClnt = Data.instance().getOrClnts().get(i);
-                    break;
-                }
-            }
-            if (orClnt != null) {
-                System.out.println("Salam, " + orClnt.getName() + " " + orClnt.getSurname() + "\n");
-                Menu.mainMenuProcess(orClnt);
-            } else {
-                System.out.println("Ad və ya pin kod yanlışdır!\n");
-            }
+        OrdinaryClient orClnt = Check.verifyLogin(nameAndSurnameArr[0], nameAndSurnameArr[1], cardPinCode);
+
+        if (orClnt != null) {
+            System.out.println("Salam, " + orClnt.getName() + " " + orClnt.getSurname() + "\n");
+            Show.mainMenu(orClnt);
         } else {
-            System.out.println(name + " adlı hesab tapılmadı. Zəhmət olmasa qeydiyyatdan keçin!\n");
+            System.out.println("Ad və ya pin kod yanlışdır!\n");
         }
     }
 }
