@@ -1,5 +1,6 @@
 package util;
 
+import bean.Client;
 import bean.OrdinaryClient;
 import menu.loginmenu.ExitProgram;
 import menu.loginmenu.LoginAccount;
@@ -35,20 +36,20 @@ public class Show {
         selectedMenu.process();
     }
 
-    public static void mainMenu(OrdinaryClient orClnt) {
+    public static void mainMenu(Client client) {
         while (true) {
             int selectedMenu = Input.number("1. Balansa bax" + "\n2. Balansı artır" +
                     "\n3. Pul nağdlaşdır" + "\n4. Köçürmə et" + "\n5. Hesabdan çıx");
             if (selectedMenu == 1) {
-                mainMenuProcess(new CheckBalance(), orClnt);
+                mainMenuProcess(new CheckBalance(), client);
             } else if (selectedMenu == 2) {
-                mainMenuProcess(new PlusBalance(), orClnt);
+                mainMenuProcess(new PlusBalance(), client);
             } else if (selectedMenu == 3) {
-                mainMenuProcess(new MinusBalance(), orClnt);
+                mainMenuProcess(new MinusBalance(), client);
             } else if (selectedMenu == 4) {
-                mainMenuProcess(new MoneyTransfer(), orClnt);
+                mainMenuProcess(new MoneyTransfer(), client);
             } else if (selectedMenu == 5) {
-                mainMenuProcess(new LogoutAccount(), orClnt);
+                mainMenuProcess(new LogoutAccount(), client);
                 break;
             } else {
                 System.out.println("Menyunu düzgün daxil edin!" + "\n");
@@ -56,7 +57,7 @@ public class Show {
         }
     }
 
-    public static void mainMenuProcess(MainMenu selectedMenu, OrdinaryClient orClnt) {
-        selectedMenu.process(orClnt);
+    public static void mainMenuProcess(MainMenu selectedMenu, Client client) {
+        selectedMenu.process(client);
     }
 }

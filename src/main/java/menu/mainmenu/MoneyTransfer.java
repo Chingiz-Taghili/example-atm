@@ -1,15 +1,15 @@
 package menu.mainmenu;
 
-import bean.OrdinaryClient;
-import data.Data;
+import bean.Client;
+import bean.Data;
 import menu.mainmenu.inter.MoneyTransferInter;
 import util.Check;
 import util.Input;
 
 public class MoneyTransfer implements MoneyTransferInter {
 
-    public void process(OrdinaryClient orClnt) {
-        if (orClnt.getCardBalance() <= 0) {
+    public void process(Client client) {
+        if (client.getCardBalance() <= 0) {
             System.out.println("Balansınızda vəsait yoxdur! Balansı artırın və yenidən cəhd edin!\n");
             return;
         }
@@ -18,39 +18,50 @@ public class MoneyTransfer implements MoneyTransferInter {
                 "\n2. Başqa bankın hesabına köçür");
 
         if (select == 1) {
-            internalTransfer(orClnt);
+            internalTransfer(client);
         } else if (select == 2) {
-            externalTransfer(orClnt);
+            externalTransfer(client);
         } else {
             System.out.println("Menyunu düzgün daxil edin!\n");
         }
     }
 
-    private void internalTransfer(OrdinaryClient orClnt) {
-        if (Data.instance().getOrClnts().size() > 1) {
-            for (OrdinaryClient oCl : Data.instance().getOrClnts()) {
-                if (oCl == orClnt) {
+    private void internalTransfer(Client client) {
+        if (Data.instance().getClients().size() > 1) {
+            for (Client clnt : Data.instance().getClients()) {
+                if (clnt == client) {
                     continue;
                 }
-                System.out.println(oCl);
+                System.out.println(clnt);
             }
 
             String cardNumber = Check.cardNumber(Input.text(
                     "Köçürmək istədiyiniz hesabın son 8 rəqəmini daxil edin"));
 
-            for (OrdinaryClient oCl : Data.instance().getOrClnts()) {
-                if (oCl.getCardNumber().endsWith(cardNumber)) {
+            for (Client cl : Data.instance().getClients()) {
+                if (cl.getCardNumber().endsWith(cardNumber)) {
                     int amount = Check.amount(Input.text("Köçürüləcək məbləği daxil edin"
-                            + " (Balansınız: " + orClnt.getCardBalance() + " AZN)"));
+                            + " (Balans: " + client.getCardBalance() + " AZN)"));
 
-                    while (amount > orClnt.getCardBalance()) {
+                    while (amount > client.getCardBalance()) {
                         amount = Check.amount(Input.text("Köçürə biləcəyiniz maksimum məbləğ: "
-                                + orClnt.getCardBalance() + " AZN"));
+                                + client.getCardBalance() + " AZN"));
                     }
-                    orClnt.minusCardBalance(amount);
-                    oCl.plusCardBalance(amount);
-                    System.out.println(amount + " AZN " + oCl.getName() + " " + oCl.getSurname() + " adlı hesaba köçürüldü!\n");
+                    client.minusCardBalance(amount);
+                    cl.plusCardBalance(amount);
+
+                    if (client.isPremium()) {
+                        int cashback = amount * 5 / 100;
+                        client.plusCardBalance(cashback);
+                        System.out.println(amount + " AZN " + cl.getName() + " " +
+                                cl.getSurname() + " adlı hesaba köçürüldü!" +
+                                "\nVə " + cashback + " AZN cashback balansınıza yükləndi!\n");
+                    } else {
+                        System.out.println(amount + " AZN " + cl.getName() + " " +
+                                cl.getSurname() + " adlı hesaba köçürüldü!\n");
+                    }
                     return;
+
                 } else {
                     System.out.println("Daxil etdiyiniz hesab tapılmadı!\n");
                 }
@@ -60,16 +71,17 @@ public class MoneyTransfer implements MoneyTransferInter {
         }
     }
 
-    private void externalTransfer(OrdinaryClient orClnt) {
+    private void externalTransfer(Client client) {
         Input.text("Köçürüləcək kartın 16 rəqəmli nömrəsini daxil edin");
         int amount = Check.amount(Input.text("Köçürüləcək məbləği daxil edin" +
-                " (Balansınız: " + orClnt.getCardBalance() + " AZN)"));
-        while (amount > orClnt.getCardBalance()) {
+                " (Balans: " + client.getCardBalance() + " AZN)"));
+        while (amount > client.getCardBalance()) {
             amount = Check.amount(Input.text("Köçürə biləcəyiniz maksimum məbləğ: "
-                    + orClnt.getCardBalance() + " AZN"));
+                    + client.getCardBalance() + " AZN"));
         }
 
-        orClnt.minusCardBalance(amount);
+
+        client.minusCardBalance(amount);
         System.out.println(amount + " AZN məbləğ daxil etdiyiniz karta köçürüldü!\n");
     }
 }

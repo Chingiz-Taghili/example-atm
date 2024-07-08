@@ -1,7 +1,8 @@
 package util;
 
+import bean.Client;
 import bean.OrdinaryClient;
-import data.Data;
+import bean.Data;
 
 public class Check {
 
@@ -69,8 +70,10 @@ public class Check {
                 }
             }
 
-            if (isDigit) {
+            if (isDigit && amount.length() <= 4) {
                 break;
+            } else if (isDigit) {
+                amount = Input.text("Hər əməliyyat üçün maksimum limit: 9999 AZN");
             } else {
                 amount = Input.text("Məbləği düzgün daxil edin!");
             }
@@ -79,9 +82,9 @@ public class Check {
     }
 
     public static boolean accountExistence(String[] nameAndSurnameArr) {
-        for (OrdinaryClient oc : Data.instance().getOrClnts()) {
-            if (oc.getName().equalsIgnoreCase(nameAndSurnameArr[0])
-                    && oc.getSurname().equalsIgnoreCase(nameAndSurnameArr[1])) {
+        for (Client cl : Data.instance().getClients()) {
+            if (cl.getName().equalsIgnoreCase(nameAndSurnameArr[0])
+                    && cl.getSurname().equalsIgnoreCase(nameAndSurnameArr[1])) {
                 System.out.println("Bu ad və soyad ilə hesab artıq mövcuddur\n");
                 return true;
             }
@@ -89,20 +92,20 @@ public class Check {
         return false;
     }
 
-    public static OrdinaryClient verifyLogin(String name, String surname, String cardPinCode) {
-        OrdinaryClient orClnt = null;
+    public static Client verifyLogin(String name, String surname, String cardPinCode) {
+        Client client = null;
 
-        if (!Data.instance().getOrClnts().isEmpty()) {
-            for (int i = 0; i < Data.instance().getOrClnts().size(); i++) {
-                if (Data.instance().getOrClnts().get(i).getName().equalsIgnoreCase(name) &&
-                        Data.instance().getOrClnts().get(i).getSurname().equalsIgnoreCase(surname)
-                        && Data.instance().getOrClnts().get(i).getCardPinCode().equals(cardPinCode)) {
-                    orClnt = Data.instance().getOrClnts().get(i);
+        if (!Data.instance().getClients().isEmpty()) {
+            for (int i = 0; i < Data.instance().getClients().size(); i++) {
+                if (Data.instance().getClients().get(i).getName().equalsIgnoreCase(name) &&
+                        Data.instance().getClients().get(i).getSurname().equalsIgnoreCase(surname)
+                        && Data.instance().getClients().get(i).getCardPinCode().equals(cardPinCode)) {
+                    client = Data.instance().getClients().get(i);
                     break;
                 }
             }
         }
 
-        return orClnt;
+        return client;
     }
 }

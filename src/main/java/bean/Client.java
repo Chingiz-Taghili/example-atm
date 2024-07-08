@@ -6,13 +6,15 @@ public abstract class Client {
     private String surname;
     private String cardNumber;
     private String cardPinCode;
+    private boolean premium;
     private int cardBalance;
 
-    public Client(String name, String surname, String cardNumber, String cardPinCode) {
+    public Client(String name, String surname, String cardNumber, String cardPinCode, boolean premium) {
         this.name = name;
         this.surname = surname;
         this.cardNumber = cardNumber;
         this.cardPinCode = cardPinCode;
+        this.premium = premium;
     }
 
     public String getName() {
@@ -29,6 +31,10 @@ public abstract class Client {
 
     public String getCardPinCode() {
         return cardPinCode;
+    }
+
+    public boolean isPremium() {
+        return premium;
     }
 
     public int getCardBalance() {

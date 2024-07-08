@@ -1,7 +1,6 @@
 package menu.loginmenu;
 
-import bean.OrdinaryClient;
-import data.Data;
+import bean.Client;
 import menu.loginmenu.inter.LoginAccountInter;
 import util.Check;
 import util.Input;
@@ -14,11 +13,11 @@ public class LoginAccount implements LoginAccountInter {
 
         String cardPinCode = Check.cardPinCode(Input.text("Kartınızın pin kodu"));
 
-        OrdinaryClient orClnt = Check.verifyLogin(nameAndSurnameArr[0], nameAndSurnameArr[1], cardPinCode);
+        Client client = Check.verifyLogin(nameAndSurnameArr[0], nameAndSurnameArr[1], cardPinCode);
 
-        if (orClnt != null) {
-            System.out.println("Salam, " + orClnt.getName() + " " + orClnt.getSurname() + "\n");
-            Show.mainMenu(orClnt);
+        if (client != null) {
+            System.out.println("Salam, " + client.getName() + " " + client.getSurname() + "\n");
+            Show.mainMenu(client);
         } else {
             System.out.println("Ad və ya pin kod yanlışdır!\n");
         }

@@ -1,8 +1,8 @@
 package menu.mainmenu.inter;
 
-import bean.OrdinaryClient;
+import bean.Client;
 
 public interface MainMenu {
 
-    void process(OrdinaryClient orClnt);
+    void process(Client orClnt);
 }
