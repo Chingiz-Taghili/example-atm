@@ -9,15 +9,13 @@ import util.Input;
 public class MoneyTransfer implements MoneyTransferInter {
 
     public void process(OrdinaryClient orClnt) {
-        int select = 0;
-        if (orClnt.getCardBalance() > 0) {
-            select = Input.number("1. Bank daxili hesaba köçür" +
-                    "\n2. Başqa bankın hesabına köçür");
-        } else {
-            System.out.println("Balansınızda köçürmə edilə biləcək vəsait yoxdur!" +
-                    " Balansınızı artırın və yenidən cəhd edin!\n");
+        if (orClnt.getCardBalance() <= 0) {
+            System.out.println("Balansınızda vəsait yoxdur! Balansı artırın və yenidən cəhd edin!\n");
             return;
         }
+
+        int select = Input.number("1. Bank daxili hesaba köçür" +
+                "\n2. Başqa bankın hesabına köçür");
 
         if (select == 1) {
             internalTransfer(orClnt);
@@ -42,11 +40,12 @@ public class MoneyTransfer implements MoneyTransferInter {
 
             for (OrdinaryClient oCl : Data.instance().getOrClnts()) {
                 if (oCl.getCardNumber().endsWith(cardNumber)) {
-                    int amount = Input.number("Köçürüləcək məbləği daxil edin (Balansınız: "
-                            + orClnt.getCardBalance() + " AZN)");
+                    int amount = Check.amount(Input.text("Köçürüləcək məbləği daxil edin"
+                            + " (Balansınız: " + orClnt.getCardBalance() + " AZN)"));
 
                     while (amount > orClnt.getCardBalance()) {
-                        amount = Input.number("Maksimum köçürə biləcəyiniz məbləğ: " + orClnt.getCardBalance() + " AZN");
+                        amount = Check.amount(Input.text("Köçürə biləcəyiniz maksimum məbləğ: "
+                                + orClnt.getCardBalance() + " AZN"));
                     }
                     orClnt.minusCardBalance(amount);
                     oCl.plusCardBalance(amount);
@@ -63,10 +62,11 @@ public class MoneyTransfer implements MoneyTransferInter {
 
     private void externalTransfer(OrdinaryClient orClnt) {
         Input.text("Köçürüləcək kartın 16 rəqəmli nömrəsini daxil edin");
-        int amount = Input.number("Köçürüləcək məbləği daxil edin (Balansınız: "
-                + orClnt.getCardBalance() + " AZN)");
+        int amount = Check.amount(Input.text("Köçürüləcək məbləği daxil edin" +
+                " (Balansınız: " + orClnt.getCardBalance() + " AZN)"));
         while (amount > orClnt.getCardBalance()) {
-            amount = Input.number("Maksimum köçürə biləcəyiniz məbləğ: " + orClnt.getCardBalance() + " AZN");
+            amount = Check.amount(Input.text("Köçürə biləcəyiniz maksimum məbləğ: "
+                    + orClnt.getCardBalance() + " AZN"));
         }
 
         orClnt.minusCardBalance(amount);

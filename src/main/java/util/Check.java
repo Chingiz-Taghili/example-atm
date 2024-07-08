@@ -58,6 +58,26 @@ public class Check {
         return cardPinCode;
     }
 
+    public static int amount(String amount) {
+        while (true) {
+            boolean isDigit = true;
+
+            for (char c : amount.toCharArray()) {
+                if (!Character.isDigit(c)) {
+                    isDigit = false;
+                    break;
+                }
+            }
+
+            if (isDigit) {
+                break;
+            } else {
+                amount = Input.text("Məbləği düzgün daxil edin!");
+            }
+        }
+        return Integer.parseInt(amount);
+    }
+
     public static boolean accountExistence(String[] nameAndSurnameArr) {
         for (OrdinaryClient oc : Data.instance().getOrClnts()) {
             if (oc.getName().equalsIgnoreCase(nameAndSurnameArr[0])
