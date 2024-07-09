@@ -9,6 +9,8 @@ import util.Check;
 import util.Input;
 import util.Show;
 
+import java.util.Random;
+
 public class RegisterAccount implements RegisterAccountInter {
 
     public void process() {
@@ -22,19 +24,20 @@ public class RegisterAccount implements RegisterAccountInter {
             return;
         }
 
-        String cardNumber = Check.cardNumber(
-                Input.text("Kart nömrəsinin son 8 rəqəmi"));
-
         String cardPinCode = Check.cardPinCode(
                 Input.text("Kartınızın 4 rəqəmli pin kodu"));
 
-        int isPremium = Input.number("Premium tarifə üzv olmaq istəyirsiniz? (Qiyməti: 50 AZN)" +
+        int isPremium = Input.number("\nPremium tarifə üzv olmaq istəyirsiniz? (Qiyməti: 50 AZN)" +
                 "\n1. Əlbəttə istəyirəm" +
                 "\n2. Maraqlı deyil");
 
         while (isPremium != 1 && isPremium != 2) {
              isPremium = Input.number("Menyunu düzgün daxil edin!");
         }
+
+        Random rnd = new Random();
+        int cardNumber = rnd.nextInt(11111111, 99999999);
+
         if (isPremium == 1) {
                 client = new PremiumClient(nameAndSurnameArr[0], nameAndSurnameArr[1], cardNumber, cardPinCode);
                 client.minusCardBalance(50);

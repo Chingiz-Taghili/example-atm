@@ -61,18 +61,18 @@ public class MoneyTransfer implements MoneyTransferInter {
                                 cl.getSurname() + " adlı hesaba köçürüldü!\n");
                     }
                     return;
-
-                } else {
-                    System.out.println("Daxil etdiyiniz hesab tapılmadı!\n");
                 }
             }
+            System.out.println("Daxil etdiyiniz hesab tapılmadı!\n");
         } else {
             System.out.println("Pul köçürə biləcəyiniz bank daxili hesab yoxdur!\n");
         }
     }
 
     private void externalTransfer(Client client) {
-        Input.text("Köçürüləcək kartın 16 rəqəmli nömrəsini daxil edin");
+
+        String cardNumber = Check.cardNumber(Input.text("Köçürüləcək kart nömrəsinin son 8 rəqəmini daxil edin"));
+
         int amount = Check.amount(Input.text("Köçürüləcək məbləği daxil edin" +
                 " (Balans: " + client.getCardBalance() + " AZN)"));
         while (amount > client.getCardBalance()) {
@@ -80,9 +80,8 @@ public class MoneyTransfer implements MoneyTransferInter {
                     + client.getCardBalance() + " AZN"));
         }
 
-
         client.minusCardBalance(amount);
-        System.out.println(amount + " AZN məbləğ daxil etdiyiniz karta köçürüldü!\n");
+        System.out.println(amount + " AZN məbləğ ********" + cardNumber + " nömrəli karta köçürüldü!\n");
     }
 }
 

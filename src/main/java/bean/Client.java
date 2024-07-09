@@ -4,17 +4,26 @@ public abstract class Client {
 
     private String name;
     private String surname;
-    private String cardNumber;
+    private int cardNumber;
     private String cardPinCode;
     private boolean premium;
     private int cardBalance;
 
-    public Client(String name, String surname, String cardNumber, String cardPinCode, boolean premium) {
+    public Client(String name, String surname, int cardNumber, String cardPinCode, boolean premium) {
         this.name = name;
         this.surname = surname;
         this.cardNumber = cardNumber;
         this.cardPinCode = cardPinCode;
         this.premium = premium;
+    }
+
+    public Client(String name, String surname, int cardNumber, String cardPinCode, boolean premium, int cardBalance) {
+        this.name = name;
+        this.surname = surname;
+        this.cardNumber = cardNumber;
+        this.cardPinCode = cardPinCode;
+        this.premium = premium;
+        this.cardBalance = cardBalance;
     }
 
     public String getName() {
@@ -49,7 +58,7 @@ public abstract class Client {
         this.cardBalance -= amount;
     }
 
-    public String toString(){
+    public String toString() {
 
         return name + " " + surname + " (" + getCardNumber() + ")";
     }
