@@ -9,8 +9,6 @@ import util.Check;
 import util.Input;
 import util.Show;
 
-import java.awt.*;
-
 public class ViewProfile implements ViewProfileInter {
 
     public void process(Client client) {
