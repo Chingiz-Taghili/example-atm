@@ -6,6 +6,7 @@ import bean.Data;
 import bean.PremiumClient;
 import menu.loginmenu.inter.RegisterAccountInter;
 import util.Check;
+import util.File;
 import util.Input;
 import util.Show;
 
@@ -45,6 +46,7 @@ public class RegisterAccount implements RegisterAccountInter {
         }
 
         Data.instance().getClients().add(client);
+        File.writeObject(Data.instance(), "Database.obj");
         System.out.println("Təbriklər " + client.getName() + " " + client.getSurname()
                 + ". Qeydiyyatınız uğurla tamamlandı!\n");
         Show.mainMenu(client);

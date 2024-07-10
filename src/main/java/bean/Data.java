@@ -1,9 +1,10 @@
 package bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Data {
+public class Data implements Serializable {
     private List<Client> clients = new ArrayList<>();
     private static Data database = null;
 

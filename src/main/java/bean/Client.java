@@ -1,6 +1,8 @@
 package bean;
 
-public abstract class Client {
+import java.io.Serializable;
+
+public abstract class Client implements Serializable {
 
     private String name;
     private String surname;

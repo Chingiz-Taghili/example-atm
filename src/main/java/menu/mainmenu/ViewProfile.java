@@ -6,10 +6,9 @@ import bean.OrdinaryClient;
 import bean.PremiumClient;
 import menu.mainmenu.inter.ViewProfileInter;
 import util.Check;
+import util.File;
 import util.Input;
 import util.Show;
-
-import java.awt.*;
 
 public class ViewProfile implements ViewProfileInter {
 
@@ -36,6 +35,7 @@ public class ViewProfile implements ViewProfileInter {
                 if (Data.instance().getClients().get(i) == client) {
                     Data.instance().getClients().remove(i);
                     Data.instance().getClients().add(i, newClient);
+                    File.writeObject(Data.instance(), "Database.obj");
                     System.out.println("Məlumatlarınız uğurla yeniləndi!\n");
                     break;
                 }

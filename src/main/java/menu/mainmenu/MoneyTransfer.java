@@ -4,6 +4,7 @@ import bean.Client;
 import bean.Data;
 import menu.mainmenu.inter.MoneyTransferInter;
 import util.Check;
+import util.File;
 import util.Input;
 
 public class MoneyTransfer implements MoneyTransferInter {
@@ -27,8 +28,9 @@ public class MoneyTransfer implements MoneyTransferInter {
     }
 
     private void internalTransfer(Client client) {
-        if (Data.instance().getClients().size() > 1) {
-            for (Client clnt : Data.instance().getClients()) {
+        Data database = (Data) File.readObject("Database.obj");
+        if (database.getClients().size() > 1) {
+            for (Client clnt : database.getClients()) {
                 if (clnt == client) {
                     continue;
                 }
@@ -38,7 +40,7 @@ public class MoneyTransfer implements MoneyTransferInter {
             String cardNumber = Check.cardNumber(Input.text(
                     "Köçürmək istədiyiniz hesabın son 8 rəqəmini daxil edin"));
 
-            for (Client cl : Data.instance().getClients()) {
+            for (Client cl : database.getClients()) {
                 if (cl.getCardNumber() == Integer.parseInt(cardNumber)) {
                     int amount = Check.amount(Input.text("Köçürüləcək məbləği daxil edin"
                             + " (Balans: " + client.getCardBalance() + " AZN)"));
@@ -60,6 +62,7 @@ public class MoneyTransfer implements MoneyTransferInter {
                         System.out.println(amount + " AZN " + cl.getName() + " " +
                                 cl.getSurname() + " adlı hesaba köçürüldü!\n");
                     }
+                    File.writeObject(Data.instance(), "Database.obj");
                     return;
                 }
             }
@@ -82,6 +85,7 @@ public class MoneyTransfer implements MoneyTransferInter {
         }
 
         client.minusCardBalance(amount);
+        File.writeObject(Data.instance(), "Database.obj");
         System.out.println(amount + " AZN məbləğ ********" + cardNumber + " nömrəli karta köçürüldü!\n");
     }
 }
