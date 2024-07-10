@@ -9,15 +9,7 @@ public abstract class Client {
     private boolean premium;
     private int cardBalance;
 
-    public Client(String name, String surname, int cardNumber, String cardPinCode, boolean premium) {
-        this.name = name;
-        this.surname = surname;
-        this.cardNumber = cardNumber;
-        this.cardPinCode = cardPinCode;
-        this.premium = premium;
-    }
-
-    public Client(String name, String surname, int cardNumber, String cardPinCode, boolean premium, int cardBalance) {
+    public Client(String name, String surname, int cardNumber, String cardPinCode, int cardBalance, boolean premium) {
         this.name = name;
         this.surname = surname;
         this.cardNumber = cardNumber;
@@ -34,8 +26,8 @@ public abstract class Client {
         return surname;
     }
 
-    public String getCardNumber() {
-        return "********" + cardNumber;
+    public int getCardNumber() {
+        return cardNumber;
     }
 
     public String getCardPinCode() {
@@ -60,6 +52,6 @@ public abstract class Client {
 
     public String toString() {
 
-        return name + " " + surname + " (" + getCardNumber() + ")";
+        return name + " " + surname + " (********" + getCardNumber() + ")";
     }
 }

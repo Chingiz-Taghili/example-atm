@@ -39,7 +39,7 @@ public class MoneyTransfer implements MoneyTransferInter {
                     "Köçürmək istədiyiniz hesabın son 8 rəqəmini daxil edin"));
 
             for (Client cl : Data.instance().getClients()) {
-                if (cl.getCardNumber().endsWith(cardNumber)) {
+                if (cl.getCardNumber() == Integer.parseInt(cardNumber)) {
                     int amount = Check.amount(Input.text("Köçürüləcək məbləği daxil edin"
                             + " (Balans: " + client.getCardBalance() + " AZN)"));
 
@@ -71,7 +71,8 @@ public class MoneyTransfer implements MoneyTransferInter {
 
     private void externalTransfer(Client client) {
 
-        String cardNumber = Check.cardNumber(Input.text("Köçürüləcək kart nömrəsinin son 8 rəqəmini daxil edin"));
+        String cardNumber = Check.cardNumber(Input.text(
+                "Köçürüləcək kart nömrəsinin son 8 rəqəmini daxil edin"));
 
         int amount = Check.amount(Input.text("Köçürüləcək məbləği daxil edin" +
                 " (Balans: " + client.getCardBalance() + " AZN)"));
