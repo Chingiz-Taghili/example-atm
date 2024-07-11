@@ -8,7 +8,6 @@ public class File {
              ObjectOutputStream oos = new ObjectOutputStream(fout)) {
             oos.writeObject(object);
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
