@@ -29,8 +29,8 @@ public class MoneyTransfer implements MoneyTransferInter {
 
     private void internalTransfer(Client client) {
         Data database = (Data) File.readObject("Database.obj");
-        if (database.getClients().size() > 1) {
-            for (Client clnt : database.getClients()) {
+        if (Data.instance().getClients().size() > 1) {
+            for (Client clnt : Data.instance().getClients()) {
                 if (clnt == client) {
                     continue;
                 }
@@ -40,7 +40,7 @@ public class MoneyTransfer implements MoneyTransferInter {
             String cardNumber = Check.cardNumber(Input.text(
                     "Köçürmək istədiyiniz hesabın son 8 rəqəmini daxil edin"));
 
-            for (Client cl : database.getClients()) {
+            for (Client cl : Data.instance().getClients()) {
                 if (cl.getCardNumber() == Integer.parseInt(cardNumber)) {
                     int amount = Check.amount(Input.text("Köçürüləcək məbləği daxil edin"
                             + " (Balans: " + client.getCardBalance() + " AZN)"));
@@ -85,8 +85,16 @@ public class MoneyTransfer implements MoneyTransferInter {
         }
 
         client.minusCardBalance(amount);
+
+        if (client.isPremium()) {
+            int cashback = amount * 5 / 100;
+            client.plusCardBalance(cashback);
+            System.out.println(amount + " AZN məbləğ ********" + cardNumber + " nömrəli karta köçürüldü!" +
+                    "\nVə " + cashback + " AZN cashback balansınıza yükləndi!\n");
+        } else {
+            System.out.println(amount + " AZN məbləğ ********" + cardNumber + " nömrəli karta köçürüldü!\n");
+        }
         File.writeObject(Data.instance(), "Database.obj");
-        System.out.println(amount + " AZN məbləğ ********" + cardNumber + " nömrəli karta köçürüldü!\n");
     }
 }
 

@@ -11,7 +11,7 @@ public abstract class Client implements Serializable {
     private boolean premium;
     private int cardBalance;
 
-    public Client(String name, String surname, int cardNumber, String cardPinCode, int cardBalance, boolean premium) {
+    Client(String name, String surname, int cardNumber, String cardPinCode, int cardBalance, boolean premium) {
         this.name = name;
         this.surname = surname;
         this.cardNumber = cardNumber;

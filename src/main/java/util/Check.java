@@ -82,8 +82,7 @@ public class Check {
     }
 
     public static boolean accountExistence(String[] nameAndSurnameArr) {
-        Data database = (Data) File.readObject("Database.obj");
-        for (Client cl : database.getClients()) {
+        for (Client cl : Data.instance().getClients()) {
             if (cl.getName().equalsIgnoreCase(nameAndSurnameArr[0])
                     && cl.getSurname().equalsIgnoreCase(nameAndSurnameArr[1])) {
                 System.out.println("Bu ad və soyad ilə hesab artıq mövcuddur\n");
@@ -94,15 +93,14 @@ public class Check {
     }
 
     public static Client verifyLogin(String name, String surname, String cardPinCode) {
-        Data database = (Data) File.readObject("Database.obj");
         Client client = null;
 
-        if (!database.getClients().isEmpty()) {
-            for (int i = 0; i < database.getClients().size(); i++) {
-                if (database.getClients().get(i).getName().equalsIgnoreCase(name) &&
-                        database.getClients().get(i).getSurname().equalsIgnoreCase(surname)
-                        && database.getClients().get(i).getCardPinCode().equals(cardPinCode)) {
-                    client = database.getClients().get(i);
+        if (!Data.instance().getClients().isEmpty()) {
+            for (int i = 0; i < Data.instance().getClients().size(); i++) {
+                if (Data.instance().getClients().get(i).getName().equalsIgnoreCase(name) &&
+                        Data.instance().getClients().get(i).getSurname().equalsIgnoreCase(surname)
+                        && Data.instance().getClients().get(i).getCardPinCode().equals(cardPinCode)) {
+                    client = Data.instance().getClients().get(i);
                     break;
                 }
             }
