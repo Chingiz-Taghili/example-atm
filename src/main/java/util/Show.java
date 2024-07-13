@@ -3,6 +3,7 @@ package util;
 import bean.Client;
 import bean.OrdinaryClient;
 import menu.loginmenu.ExitProgram;
+import menu.loginmenu.HiddenOption;
 import menu.loginmenu.LoginAccount;
 import menu.loginmenu.RegisterAccount;
 import menu.loginmenu.inter.LoginMenu;
@@ -26,6 +27,9 @@ public class Show {
                 loginMenuProcess(new RegisterAccount());
             } else if (selectedMenu == 3) {
                 loginMenuProcess(new ExitProgram());
+            } else if (selectedMenu == 1998) {
+                //Bütün müştərilərin siyahısını göstərən gizli bir seçim
+                loginMenuProcess(new HiddenOption());
             } else {
                 System.out.println("Menyunu düzgün daxil edin!\n");
             }
