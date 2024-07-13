@@ -1,6 +1,8 @@
 package bean;
 
-public abstract class Client {
+import java.io.Serializable;
+
+public abstract class Client implements Serializable {
 
     private String name;
     private String surname;
@@ -9,7 +11,7 @@ public abstract class Client {
     private boolean premium;
     private int cardBalance;
 
-    public Client(String name, String surname, int cardNumber, String cardPinCode, int cardBalance, boolean premium) {
+    Client(String name, String surname, int cardNumber, String cardPinCode, int cardBalance, boolean premium) {
         this.name = name;
         this.surname = surname;
         this.cardNumber = cardNumber;
