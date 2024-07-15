@@ -1,7 +1,6 @@
 package util;
 
 import bean.Client;
-import bean.OrdinaryClient;
 import bean.Data;
 
 public class Check {

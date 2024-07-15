@@ -1,7 +1,6 @@
 package util;
 
 import bean.Client;
-import bean.OrdinaryClient;
 import menu.loginmenu.ExitProgram;
 import menu.loginmenu.HiddenOption;
 import menu.loginmenu.LoginAccount;

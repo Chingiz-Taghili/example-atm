@@ -20,24 +20,4 @@ public class File {
             return obj;
         }
     }
-
-//    public static boolean writeObject(Serializable object, String fileName) throws RunTimeException{
-//        try (FileOutputStream fout = new FileOutputStream(fileName);
-//             ObjectOutputStream oos = new ObjectOutputStream(fout)) {
-//            oos.writeObject(object);
-//            return true;
-//        } catch (Exception ex) {
-//            throw new RunTimeException(ex);
-//        }
-//    }
-//
-//    public static Object readObject(String fileName) {
-//        Object obj = null;
-//        try (FileInputStream fis = new FileInputStream(fileName);
-//             ObjectInputStream in = new ObjectInputStream(fis)) {
-//            obj = in.readObject();
-//        } finally {
-//            return obj;
-//        }
-//    }
 }
