@@ -2,12 +2,12 @@ package menu.mainmenu;
 
 import bean.Client;
 import bean.Data;
-import menu.mainmenu.inter.MoneyTransferInter;
+import menu.mainmenu.inter.MoneyTransfer;
 import util.Check;
 import util.File;
 import util.Input;
 
-public class MoneyTransfer implements MoneyTransferInter {
+public class MoneyTransferImpl implements MoneyTransfer {
 
     public void process(Client client) {
         if (client.getCardBalance() <= 0) {
@@ -28,7 +28,6 @@ public class MoneyTransfer implements MoneyTransferInter {
     }
 
     private void internalTransfer(Client client) {
-        Data database = (Data) File.readObject("Database.obj");
         if (Data.instance().getClients().size() > 1) {
             for (Client clnt : Data.instance().getClients()) {
                 if (clnt == client) {
@@ -62,7 +61,7 @@ public class MoneyTransfer implements MoneyTransferInter {
                         System.out.println(amount + " AZN " + cl.getName() + " " +
                                 cl.getSurname() + " adlı hesaba köçürüldü!\n");
                     }
-                    File.writeObject(Data.instance(), "Database.obj");
+                    File.writeObject(Data.instance(), "src/main/resources/Database.obj");
                     return;
                 }
             }
@@ -94,7 +93,7 @@ public class MoneyTransfer implements MoneyTransferInter {
         } else {
             System.out.println(amount + " AZN məbləğ ********" + cardNumber + " nömrəli karta köçürüldü!\n");
         }
-        File.writeObject(Data.instance(), "Database.obj");
+        File.writeObject(Data.instance(), "src/main/resources/Database.obj");
     }
 }
 

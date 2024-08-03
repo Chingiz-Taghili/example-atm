@@ -1,12 +1,11 @@
 package menu.loginmenu;
 
 import bean.Client;
-import menu.loginmenu.inter.LoginAccountInter;
 import util.Check;
 import util.Input;
 import util.Show;
 
-public class LoginAccount implements LoginAccountInter {
+public class LoginAccountImpl implements menu.loginmenu.inter.LoginAccount {
 
     public void process() {
         String[] nameAndSurnameArr = Check.nameAndSurname(Input.text("Adınız və soyadınız"));
