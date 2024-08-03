@@ -1,10 +1,10 @@
 package util;
 
 import bean.Client;
-import menu.loginmenu.ExitProgram;
-import menu.loginmenu.HiddenOption;
-import menu.loginmenu.LoginAccount;
-import menu.loginmenu.RegisterAccount;
+import menu.loginmenu.ExitProgramImpl;
+import menu.loginmenu.HiddenOptionImpl;
+import menu.loginmenu.LoginAccountImpl;
+import menu.loginmenu.RegisterAccountImpl;
 import menu.loginmenu.inter.LoginMenu;
 import menu.mainmenu.*;
 import menu.mainmenu.inter.MainMenu;
@@ -21,14 +21,14 @@ public class Show {
         while (true) {
             int selectedMenu = Input.number("1. Hesaba daxil ol\n2. Qeydiyyatdan keç\n3. Çıxış");
             if (selectedMenu == 1) {
-                loginMenuProcess(new LoginAccount());
+                loginMenuProcess(new LoginAccountImpl());
             } else if (selectedMenu == 2) {
-                loginMenuProcess(new RegisterAccount());
+                loginMenuProcess(new RegisterAccountImpl());
             } else if (selectedMenu == 3) {
-                loginMenuProcess(new ExitProgram());
+                loginMenuProcess(new ExitProgramImpl());
             } else if (selectedMenu == 1998) {
                 //Bütün müştərilərin siyahısını göstərən gizli bir seçim
-                loginMenuProcess(new HiddenOption());
+                loginMenuProcess(new HiddenOptionImpl());
             } else {
                 System.out.println("Menyunu düzgün daxil edin!\n");
             }
@@ -44,17 +44,17 @@ public class Show {
             int selectedMenu = Input.number("1. Balansa bax" + "\n2. Balansı artır" +
                     "\n3. Pul nağdlaşdır" + "\n4. Köçürmə et" + "\n5. Profilə bax" + "\n6. Hesabdan çıx");
             if (selectedMenu == 1) {
-                mainMenuProcess(new CheckBalance(), client);
+                mainMenuProcess(new CheckBalanceImpl(), client);
             } else if (selectedMenu == 2) {
-                mainMenuProcess(new PlusBalance(), client);
+                mainMenuProcess(new PlusBalanceImpl(), client);
             } else if (selectedMenu == 3) {
-                mainMenuProcess(new MinusBalance(), client);
+                mainMenuProcess(new MinusBalanceImpl(), client);
             } else if (selectedMenu == 4) {
-                mainMenuProcess(new MoneyTransfer(), client);
+                mainMenuProcess(new MoneyTransferImpl(), client);
             } else if (selectedMenu == 5) {
-                mainMenuProcess(new ViewProfile(), client);
+                mainMenuProcess(new ViewProfileImpl(), client);
             } else if (selectedMenu == 6) {
-                mainMenuProcess(new LogoutAccount(), client);
+                mainMenuProcess(new LogoutAccountImpl(), client);
                 break;
             } else {
                 System.out.println("Menyunu düzgün daxil edin!\n");

@@ -2,9 +2,8 @@ package menu.loginmenu;
 
 import bean.Client;
 import bean.Data;
-import menu.loginmenu.inter.HiddenOptionInter;
 
-public class HiddenOption implements HiddenOptionInter {
+public class HiddenOptionImpl implements menu.loginmenu.inter.HiddenOption {
 
     public void process() {
         //Bütün müştərilərin siyahısını göstərən gizli bir seçim

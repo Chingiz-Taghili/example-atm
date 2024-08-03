@@ -14,7 +14,7 @@ public class Data implements Serializable {
     }
 
     public static void initialize() {
-        Object object = File.readObject("Database.obj");
+        Object object = File.readObject("src/main/resources/Database.obj");
         if (object == null) {
             return;
         }

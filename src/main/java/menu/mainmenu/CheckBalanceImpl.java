@@ -1,9 +1,9 @@
 package menu.mainmenu;
 
 import bean.Client;
-import menu.mainmenu.inter.CheckBalanceInter;
+import menu.mainmenu.inter.CheckBalance;
 
-public class CheckBalance implements CheckBalanceInter {
+public class CheckBalanceImpl implements CheckBalance {
 
     public void process(Client client) {
         System.out.println("Balansınız: " + client.getCardBalance() + " AZN\n");

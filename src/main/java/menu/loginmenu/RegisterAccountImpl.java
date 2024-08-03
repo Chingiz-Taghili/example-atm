@@ -4,7 +4,6 @@ import bean.Client;
 import bean.OrdinaryClient;
 import bean.Data;
 import bean.PremiumClient;
-import menu.loginmenu.inter.RegisterAccountInter;
 import util.Check;
 import util.File;
 import util.Input;
@@ -12,7 +11,7 @@ import util.Show;
 
 import java.util.Random;
 
-public class RegisterAccount implements RegisterAccountInter {
+public class RegisterAccountImpl implements menu.loginmenu.inter.RegisterAccount {
 
     public void process() {
 
@@ -46,7 +45,7 @@ public class RegisterAccount implements RegisterAccountInter {
         }
 
         Data.instance().getClients().add(client);
-        File.writeObject(Data.instance(), "Database.obj");
+        File.writeObject(Data.instance(), "src/main/resources/Database.obj");
         System.out.println("Təbriklər " + client.getName() + " " + client.getSurname()
                 + ". Qeydiyyatınız uğurla tamamlandı!\n");
         Show.mainMenu(client);

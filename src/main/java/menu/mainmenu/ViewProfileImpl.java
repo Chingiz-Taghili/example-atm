@@ -4,13 +4,13 @@ import bean.Client;
 import bean.Data;
 import bean.OrdinaryClient;
 import bean.PremiumClient;
-import menu.mainmenu.inter.ViewProfileInter;
+import menu.mainmenu.inter.ViewProfile;
 import util.Check;
 import util.File;
 import util.Input;
 import util.Show;
 
-public class ViewProfile implements ViewProfileInter {
+public class ViewProfileImpl implements ViewProfile {
 
     public void process(Client client) {
         System.out.println("Ad: " + client.getName() +
@@ -35,7 +35,7 @@ public class ViewProfile implements ViewProfileInter {
                 if (Data.instance().getClients().get(i) == client) {
                     Data.instance().getClients().remove(i);
                     Data.instance().getClients().add(i, newClient);
-                    File.writeObject(Data.instance(), "Database.obj");
+                    File.writeObject(Data.instance(), "src/main/resources/Database.obj");
                     System.out.println("Məlumatlarınız uğurla yeniləndi!\n");
                     break;
                 }

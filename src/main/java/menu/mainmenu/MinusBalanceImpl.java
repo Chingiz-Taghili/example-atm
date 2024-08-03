@@ -2,12 +2,12 @@ package menu.mainmenu;
 
 import bean.Client;
 import bean.Data;
-import menu.mainmenu.inter.MinusBalanceInter;
+import menu.mainmenu.inter.MinusBalance;
 import util.Check;
 import util.File;
 import util.Input;
 
-public class MinusBalance implements MinusBalanceInter {
+public class MinusBalanceImpl implements MinusBalance {
 
     public void process(Client client) {
         if (client.getCardBalance() <= 0) {
@@ -23,7 +23,7 @@ public class MinusBalance implements MinusBalanceInter {
                     + client.getCardBalance() + " AZN"));
         }
         client.minusCardBalance(amount);
-        File.writeObject(Data.instance(), "Database.obj");
+        File.writeObject(Data.instance(), "src/main/resources/Database.obj");
         System.out.println("Pul nağdlaşdırıldı!\n");
     }
 }

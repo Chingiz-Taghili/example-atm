@@ -60,6 +60,12 @@ public class Check {
 
     public static int amount(String amount) {
         while (true) {
+
+            if (amount.isEmpty()) {
+                amount = Input.text("Məbləği düzgün daxil edin!");
+                continue;
+            }
+
             boolean isDigit = true;
 
             for (char c : amount.toCharArray()) {
@@ -70,14 +76,13 @@ public class Check {
             }
 
             if (isDigit && amount.length() <= 4) {
-                break;
+                return Integer.parseInt(amount);
             } else if (isDigit) {
                 amount = Input.text("Hər əməliyyat üçün maksimum limit: 9999 AZN");
             } else {
                 amount = Input.text("Məbləği düzgün daxil edin!");
             }
         }
-        return Integer.parseInt(amount);
     }
 
     public static boolean accountExistence(String[] nameAndSurnameArr) {
